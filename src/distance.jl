@@ -2,6 +2,16 @@
 has_distances{T}(edge_dists::AbstractArray{T,2}) =
     issparse(edge_dists)? (nnz(edge_dists) > 0) : !isempty(edge_dists)
 
+# we use this type to represent an array of default distances - that is,
+# this type simulates an array of a specified type but returns the one()
+# of that type.
+type DefaultDistance{T<:Number} <: AbstractArray{T,2}
+end
+
+DefaultDistance() = DefaultDistance{Float64}()
+@inline getindex{T<:Number}(::DefaultDistance{T}, ::Int, ::Int) = one(T)
+
+
 function eccentricity(
     g::AbstractGraph,
     v::Int;

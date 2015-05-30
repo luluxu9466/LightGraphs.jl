@@ -7,6 +7,10 @@ if VERSION < v"0.4.0-dev+818"
         second::T2
     end
 
+    function show(io::IO, p::Pair)
+        print(io, "$(e.first)=>$(e.second)")
+    end
+
 end
 
 if VERSION < v"0.4.0-dev+4103"
@@ -35,11 +39,6 @@ dst(e::Edge) = e.second
 
 @deprecate rev(e::Edge) reverse(e)
 
-==(e1::Edge, e2::Edge) = (e1.first == e2.first && e1.second == e2.second)
-
-function show(io::IO, e::Edge)
-    print(io, "edge $(e.first) - $(e.second)")
-end
 
 vertices(g::AbstractGraph) = g.vertices
 edges(g::AbstractGraph) = g.edges
